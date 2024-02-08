@@ -1,4 +1,4 @@
-module github.com/soulteary/funny-china-weather
+module github.com/w4lk3r/funny-go-weather
 
 go 1.19
 
