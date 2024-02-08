@@ -2,6 +2,7 @@ package weather
 
 import (
 	"errors"
+	"html/template"
 	"strconv"
 	"strings"
 	"time"
@@ -74,6 +75,21 @@ var tencentWeatherInfoMap = [...]itemTencentWeather{
 	{Name: "冰雹", Value: "icon-hail", Code: -1},
 	{Name: "霰", Value: "icon-sleet", Code: -1},
 	{Name: "风", Value: "icon-wind", Code: -1},
+}
+
+const _EMPTY_ICON = template.HTML("")
+
+func GetSVGCodeByName(name string) template.HTML {
+	if name == "" {
+		return _EMPTY_ICON
+	}
+
+	icon := iconMap[name]
+	if icon == "" {
+		return _EMPTY_ICON
+	}
+
+	return template.HTML(icon)
 }
 
 // 解析来自腾讯天气的接口数据（中国气象网）
