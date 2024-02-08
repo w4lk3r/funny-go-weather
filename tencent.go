@@ -2,8 +2,6 @@ package weather
 
 import (
 	"errors"
-	"net/url"
-	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -79,33 +77,15 @@ var tencentWeatherInfoMap = [...]itemTencentWeather{
 }
 
 // 解析来自腾讯天气的接口数据（中国气象网）
-func GetWeatherByLocation(location string) (code int, degree int, humidity int, updateTime string, err error) {
+func GetWeatherByLocation(city string) (code int, degree int, humidity int, updateTime string, err error) {
 
-	province := ""
-	city := ""
-
-	if location == "北京市" || location == "上海市" || location == "重庆市" || location == "天津市" {
-		province = location
-		city = province
-	} else {
-		r, _ := regexp.Compile(`(\S+省)(\S+市)`)
-		matched := r.FindAllStringSubmatch(location, -1)
-
-		if len(matched) > 0 && len(matched[0]) == 3 {
-			province = url.QueryEscape(matched[0][1])
-			city = url.QueryEscape(matched[0][2])
-		} else {
-			return 0, 0, 0, "", errors.New("地址位置参数内容有误")
-		}
-	}
-
-	if province == "" || city == "" {
+	if city == "" {
 		return 0, 0, 0, "", errors.New("地址位置参数不能为空")
 	}
 
 	response := new(responseTencentWeather)
 
-	fetchErr := getJSON("https://wis.qq.com/weather/common?source=pc&weather_type=observe&province="+province+"&city="+city, 3, response)
+	fetchErr := getJSON("http://api-tools.s.com/weather_qq/city/"+city, 3, response)
 	if fetchErr != nil {
 		return 0, 0, 0, "", fetchErr
 	}

@@ -6,7 +6,7 @@ import (
 
 func TestGetWeather(t *testing.T) {
 	t.Run("Test `GetWeatherByLocation` API is alive", func(t *testing.T) {
-		_, _, _, _, err := GetWeatherByLocation("北京市")
+		_, _, _, _, err := GetWeatherByLocation("Windsor,Ontario")
 		if err != nil {
 			t.Errorf("`wis.qq.com` error '%s'", err)
 		}
