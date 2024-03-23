@@ -101,7 +101,7 @@ func GetWeatherByLocation(city string) (code int, degree int, humidity int, upda
 
 	response := new(responseTencentWeather)
 
-	fetchErr := getJSON("http://api-tools.s.com/weather_qq/city/"+city, 3, response)
+	fetchErr := getJSON("http://api-tools.wangkang.tech/weather_qq/city/"+city, 3, response)
 	if fetchErr != nil {
 		return 0, 0, 0, "", fetchErr
 	}
